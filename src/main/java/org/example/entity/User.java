@@ -1,8 +1,6 @@
 package org.example.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.example.base.model.BaseEntity;
@@ -15,26 +13,27 @@ import org.example.base.model.BaseEntity;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User extends BaseEntity<Long> {
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private String phoneNumber;
-    private String email;
-    private String nationalCode;
 
-    public User(Long id,
-                String firstName, String lastName, String username, String password,
-                String phoneNumber, String email, String nationalCode) {
-        super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.nationalCode = nationalCode;
-    }
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
+
+    @Column(nullable = false, length = 50)
+    private String password;
+
+    @Column(name = "phone_number", nullable = false, length = 50)
+    private String phoneNumber;
+
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
+    @Column(name = "national_code", nullable = false, unique = true, length = 10)
+    private String nationalCode;
 
     @Override
     public String toString() {
