@@ -6,12 +6,12 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/hibernate_test</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/hibernate</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">postgres</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hbm2ddl.auto">update</property>
-        <property name="hibernate.default_schema">generic_test</property>
+        <property name="hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.default_schema">university</property>
 
 </session-factory>
 </hibernate-configuration>

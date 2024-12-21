@@ -5,12 +5,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Setter
+@SuperBuilder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor

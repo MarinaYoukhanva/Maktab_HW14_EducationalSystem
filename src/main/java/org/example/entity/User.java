@@ -4,10 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.example.base.model.BaseEntity;
 
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

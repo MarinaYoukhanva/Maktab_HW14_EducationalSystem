@@ -1,10 +1,12 @@
 package org.example.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.example.base.model.BaseEntity;
 import org.example.entity.enums.LessonName;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,18 +25,8 @@ public class Course extends BaseEntity<Long> {
     private Integer capacity;
     private LocalDateTime startTime;
 
-    //private Teacher teacher;
-
-
-    public Course(Long id,
-                  LessonName name, Integer unit, Integer capacity,
-                  LocalDateTime startTime) {
-        super(id);
-        this.name = name;
-        this.unit = unit;
-        this.capacity = capacity;
-        this.startTime = startTime;
-    }
+    @ManyToOne
+    private Teacher teacher;
 
     @Override
     public String toString() {
