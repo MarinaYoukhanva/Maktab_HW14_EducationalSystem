@@ -14,7 +14,6 @@ public abstract class BaseRepositoryImpl<ID extends Serializable, T extends Base
 
     private final Class<T> entityClass;
 
-
     @Override
     public T save(Session session, T entity) {
         session.persist(entity);

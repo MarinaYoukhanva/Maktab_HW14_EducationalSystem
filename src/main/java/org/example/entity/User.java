@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -18,10 +19,27 @@ import org.hibernate.validator.constraints.Length;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User extends BaseEntity<Long> {
 
+//    public User(Long id,
+//                String firstName, String lastName, String username, String password,
+//                String email, String phoneNumber, String nationalCode) {
+//        super(id);
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.username = username;
+//        this.password = password;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
+//        this.nationalCode = nationalCode;
+//    }
+
     @Column(name = "first_name", nullable = false, length = 50)
+    @NotBlank(message = "firstname can not be blank! ")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "firstname only can contains letters! ")
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 50)
+    @NotBlank(message = "lastname can not be blank! ")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "lastname only can contains letters! ")
     private String lastName;
 
     @Column(nullable = false, unique = true, length = 50)
@@ -34,7 +52,7 @@ public abstract class User extends BaseEntity<Long> {
     @Pattern(regexp = "^00980?9|\\+980?9[01239]\\d{8}$", message = "invalid phone-number! ")
     private String phoneNumber;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(unique = true, length = 100)
     @Pattern(regexp = "^[^@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "invalid email format! ")
     private String email;
 
