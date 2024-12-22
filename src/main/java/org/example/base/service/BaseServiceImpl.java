@@ -40,7 +40,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
                 session.beginTransaction();
                 var foundEntity = repository.findById(session, entity.getId())
                         .orElseThrow(() -> new RuntimeException("Contact not found"));
-                updateColumns(foundEntity);
+                updateColumns(entity, foundEntity);
                 repository.save(session, foundEntity);
                 session.getTransaction().commit();
                 return foundEntity;
@@ -96,6 +96,6 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
             }
         }
     }
-    public abstract void updateColumns (T entity);
+    public abstract void updateColumns (T entity, T foundEntity);
 }
 

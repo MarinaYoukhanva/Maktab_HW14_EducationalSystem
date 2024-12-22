@@ -2,9 +2,9 @@ package org.example.base.config;
 
 import org.example.entity.Student;
 import org.example.repository.StudentRepository;
-import org.example.repository.StudentRepositoryImpl;
+import org.example.repository.impl.StudentRepositoryImpl;
 import org.example.service.StudentService;
-import org.example.service.StudentServiceImpl;
+import org.example.service.impl.StudentServiceImpl;
 
 public class ApplicationContext {
     private static final Class<Student> studentClass;
