@@ -4,10 +4,13 @@ import org.example.base.config.ApplicationContext;
 import org.example.entity.Admin;
 import org.example.entity.Student;
 import org.example.entity.StudentCourse;
+import org.example.entity.enums.Field;
 import org.example.service.AdminService;
 import org.example.service.StudentService;
 import org.example.view.AdminMenu;
 import org.hibernate.Session;
+
+import java.util.EnumSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,6 +42,8 @@ public class Main {
 //        }
 
         //System.out.println(adminService.findById(1L).get());
+        EnumSet.allOf(Field.class).forEach(System.out::println);
+
         adminMenu.adminMenu();
     }
 

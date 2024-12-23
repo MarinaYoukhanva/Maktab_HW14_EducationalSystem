@@ -1,6 +1,8 @@
 package org.example.entity.dto;
 
 import lombok.*;
+import org.example.entity.enums.Degree;
+import org.example.entity.enums.Field;
 
 @Getter
 @Setter
@@ -13,4 +15,6 @@ public class TeacherDto {
     String lastName;
     String email;
     String personnelCode;
+    Field field;
+    Degree degree;
 }

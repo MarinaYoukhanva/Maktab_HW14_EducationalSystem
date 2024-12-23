@@ -25,13 +25,13 @@ public class Teacher extends User{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @NotBlank(message = "field can not be null or blank!")
+    //@NotBlank(message = "field can not be null or blank!")
     private Field field;
 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @NotBlank(message = "degree can not be null or blank!")
+    //@NotBlank(message = "degree can not be null or blank!")
     private Degree degree;
 
 

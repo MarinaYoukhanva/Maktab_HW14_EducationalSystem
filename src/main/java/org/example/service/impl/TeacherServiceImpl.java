@@ -27,6 +27,8 @@ public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRe
         foundTeacher.setPhoneNumber(teacher.getPhoneNumber());
         foundTeacher.setEmail(teacher.getEmail());
         foundTeacher.setPersonnelCode(teacher.getPersonnelCode());
+        foundTeacher.setField(teacher.getField());
+        foundTeacher.setDegree(teacher.getDegree());
     }
 
     @Override
@@ -54,7 +56,9 @@ public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRe
                         teacher.getFirstName(), teacher.getLastName(),
                         Optional.ofNullable(teacher.getEmail())
                                 .orElse("email is not available by user"),
-                        teacher.getPersonnelCode())
+                        teacher.getPersonnelCode(),
+                        teacher.getField(),
+                        teacher.getDegree())
                 ).toList();
 
     }
