@@ -1,16 +1,14 @@
-package org.example.service;
+package org.example.service.Authentication;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.entity.User;
 
-public class Authentication {
+public class UserAuthentication {
 
     @Getter
+    @Setter
     private static User loggedInUser;
-
-    public static void setLoggedUser(User user){
-        loggedInUser = user;
-    }
 
     public static void logout(){
         loggedInUser = null;

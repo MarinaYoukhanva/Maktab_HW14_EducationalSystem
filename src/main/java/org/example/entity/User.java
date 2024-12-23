@@ -17,7 +17,6 @@ import org.example.base.model.BaseEntity;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User extends BaseEntity<Long> {
 
-
     @Column(name = "first_name",
             nullable = false, length = 50)
     @NotBlank(
@@ -64,7 +63,7 @@ public abstract class User extends BaseEntity<Long> {
             message = "phone_number can not be null or blank! ")
     @Size(max = 15,
             message = "long phone_number! ")
-    @Pattern(regexp = "^00980?9|\\+980?9[01239]\\d{8}$",
+    @Pattern(regexp = "^((0098)0?9|\\+980?9)[01239]\\d{8}$",
             message = "invalid phone-number! ")
     private String phoneNumber;
 
@@ -102,6 +101,5 @@ public abstract class User extends BaseEntity<Long> {
                 ", nationalCode='" + nationalCode + '\'' +
                 '}';
     }
-
 
 }

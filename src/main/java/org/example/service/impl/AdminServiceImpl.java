@@ -2,8 +2,10 @@ package org.example.service.impl;
 
 import org.example.base.service.BaseServiceImpl;
 import org.example.entity.Admin;
+import org.example.exception.NotFoundException;
 import org.example.repository.AdminRepository;
 import org.example.service.AdminService;
+import org.example.service.Authentication.AdminAuthentication;
 import org.hibernate.Session;
 
 public class AdminServiceImpl extends BaseServiceImpl<Long, Admin, AdminRepository>
@@ -15,16 +17,21 @@ public class AdminServiceImpl extends BaseServiceImpl<Long, Admin, AdminReposito
 
     @Override
     public void infoLogicCheck(Session session, Admin admin) {
-
     }
 
     @Override
     public void updateColumns(Admin admin, Admin foundAdmin) {
-        foundAdmin.setFirstName(admin.getFirstName());
-        foundAdmin.setLastName(admin.getLastName());
         foundAdmin.setUsername(admin.getUsername());
         foundAdmin.setPassword(admin.getPassword());
-        foundAdmin.setPhoneNumber(admin.getPhoneNumber());
-        foundAdmin.setEmail(admin.getEmail());
+    }
+
+    @Override
+    public Admin login(String username, String password) {
+        Admin admin = getRepository().findByUsername(username)
+                .orElseThrow(() -> new NotFoundException(Admin.class));
+        if (!admin.getPassword().equals(password))
+            throw new NotFoundException(Admin.class);
+        AdminAuthentication.setLoggedInAdmin(admin);
+        return admin;
     }
 }

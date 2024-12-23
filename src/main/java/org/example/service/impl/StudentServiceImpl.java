@@ -2,11 +2,15 @@ package org.example.service.impl;
 
 import org.example.base.service.BaseServiceImpl;
 import org.example.entity.Student;
+import org.example.entity.dto.StudentDto;
 import org.example.exception.*;
 import org.example.repository.StudentRepository;
-import org.example.service.Authentication;
+import org.example.service.Authentication.UserAuthentication;
 import org.example.service.StudentService;
 import org.hibernate.Session;
+
+import java.util.List;
+import java.util.Optional;
 
 
 public class StudentServiceImpl extends BaseServiceImpl<Long, Student, StudentRepository>
@@ -14,14 +18,6 @@ public class StudentServiceImpl extends BaseServiceImpl<Long, Student, StudentRe
 
     public StudentServiceImpl(StudentRepository repository) {
         super(repository);
-    }
-
-    @Override
-    public void infoLogicCheck(Session session, Student student) {
-        emailUniqueCheck(session, student);
-        usernameUniqueCheck(session, student);
-        nationalCodeUniqueCheck(session, student);
-        studentNumberUniqueCheck(session, student);
     }
 
     @Override
@@ -36,13 +32,31 @@ public class StudentServiceImpl extends BaseServiceImpl<Long, Student, StudentRe
     }
 
     @Override
+    public void infoLogicCheck(Session session, Student student) {
+        emailUniqueCheck(session, student);
+        usernameUniqueCheck(session, student);
+        nationalCodeUniqueCheck(session, student);
+        studentNumberUniqueCheck(session, student);
+    }
+
+    @Override
     public Student login(String studentNumber, String password) {
-            Student student = getRepository().findByStudentNumber(studentNumber)
+        Student student = getRepository().findByStudentNumber(studentNumber)
                 .orElseThrow(() -> new NotFoundException(Student.class));
         if (!student.getPassword().equals(password))
             throw new NotFoundException(Student.class);
-        Authentication.setLoggedUser(student);
+        UserAuthentication.setLoggedInUser(student);
         return student;
+    }
+
+    @Override
+    public List<StudentDto> findAllDto() {
+        return findAll().stream().map(student -> new StudentDto(
+                student.getFirstName(), student.getLastName(),
+                Optional.ofNullable(student.getEmail())
+                        .orElse("email is not available by user"),
+                student.getStudentNumber())
+        ).toList();
     }
 
     private void usernameUniqueCheck(Session session, Student student) {

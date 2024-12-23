@@ -38,7 +38,7 @@ public class Main {
 //            ;
 //        }
 
-        System.out.println(adminService.findById(1L).get());
+        //System.out.println(adminService.findById(1L).get());
         adminMenu.adminMenu();
     }
 

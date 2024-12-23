@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface AdminRepository extends BaseRepository<Long, Admin> {
 
-    Optional<Admin> findByUsername(Session session, String username);
+    Optional<Admin> findByUsername(String username);
 }
