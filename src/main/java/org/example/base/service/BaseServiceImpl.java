@@ -2,16 +2,19 @@ package org.example.base.service;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ValidationException;
+import lombok.Getter;
 import org.example.SessionFactoryInstance;
 import org.example.base.model.BaseEntity;
 import org.example.base.repository.BaseRepository;
 import org.example.validation.Validation;
+import org.hibernate.Session;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Getter
 public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEntity<ID>,
         R extends BaseRepository<ID, T>> implements BaseService<ID, T> {
 
@@ -29,6 +32,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
         if (!violations.isEmpty())
             throw new ValidationException(String.valueOf(violations));
         try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+            infoLogicCheck(session, entity);
             try {
                 session.beginTransaction();
                 repository.save(session, entity);
@@ -47,6 +51,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
         if (!violations.isEmpty())
             throw new ValidationException(String.valueOf(violations));
         try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+            infoLogicCheck(session, entity);
             try {
                 session.beginTransaction();
                 var foundEntity = repository.findById(session, entity.getId())
@@ -108,5 +113,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
         }
     }
     public abstract void updateColumns (T entity, T foundEntity);
+    public abstract void infoLogicCheck (Session session, T entity);
+
 }
 

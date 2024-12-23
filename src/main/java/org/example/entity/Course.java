@@ -3,6 +3,8 @@ package org.example.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,20 +23,45 @@ import java.time.LocalDateTime;
 @Entity
 public class Course extends BaseEntity<Long> {
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(
+            nullable = false, unique = true, length = 100)
+    @NotBlank(
+            message = "course-name can not be null or blank! ")
+    @Size(max = 100,
+            message = "long course-name! ")
     private LessonName name;
 
-    @Column(nullable = false, length = 2)
+
+    @Column(
+            nullable = false, length = 2)
+    @NotBlank(
+            message = "unit can not be null or blank! ")
+    @Size(max = 2,
+            message = "long number! ")
     private Integer unit;
 
-    @Column(nullable = false, length = 3)
+
+    @Column(
+            nullable = false, length = 3)
+    @NotBlank(
+            message = "capacity can not be null or blank! ")
+    @Size(max = 3,
+            message = "long number! ")
     private Integer capacity;
 
-    @Column(name = "start_time", nullable = false, length = 50)
+
+    @Column(name = "start_time",
+            nullable = false, length = 50)
+    @NotBlank(
+            message = "start_time can not be null or blank! ")
+    @Size(max = 50,
+            message = "long input for start_time! ")
     private LocalDateTime startTime;
+
 
     @ManyToOne
     private Teacher teacher;
+
 
     @Override
     public String toString() {

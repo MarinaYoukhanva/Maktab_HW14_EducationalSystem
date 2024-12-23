@@ -28,9 +28,20 @@ public class Main {
                 .build();
         //ss.save(student);
 
+//        try {
+//            studentService.save(Student.builder()
+//                    .firstName(" ")
+//                    .lastName(" ")
+//                    .build());
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            ;
+//        }
+
         System.out.println(adminService.findById(1L).get());
         adminMenu.adminMenu();
     }
+
     public static Student find(Session session, Integer id) {
         return session.byId(Student.class)
                 .load(id);

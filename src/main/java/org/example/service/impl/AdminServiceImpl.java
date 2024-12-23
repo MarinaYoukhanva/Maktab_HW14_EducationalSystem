@@ -4,12 +4,18 @@ import org.example.base.service.BaseServiceImpl;
 import org.example.entity.Admin;
 import org.example.repository.AdminRepository;
 import org.example.service.AdminService;
+import org.hibernate.Session;
 
 public class AdminServiceImpl extends BaseServiceImpl<Long, Admin, AdminRepository>
         implements AdminService {
 
     public AdminServiceImpl(AdminRepository repository) {
         super(repository);
+    }
+
+    @Override
+    public void infoLogicCheck(Session session, Admin admin) {
+
     }
 
     @Override
