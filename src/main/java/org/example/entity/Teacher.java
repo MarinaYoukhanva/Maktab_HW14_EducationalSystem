@@ -49,9 +49,9 @@ public class Teacher extends User{
     @Override
     public String toString() {
         return super.toString() + ", Teacher{" +
-                "field=" + field +
-                ", degree=" + degree +
-                ", personnelCode='" + personnelCode + '\'' +
+                "field= " + field +
+                ", degree= " + degree +
+                ", personnelCode= '" + personnelCode + '\'' +
                 '}';
     }
 

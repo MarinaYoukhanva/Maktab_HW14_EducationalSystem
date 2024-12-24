@@ -42,7 +42,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
                 return entity;
             } catch (Exception e) {
                 session.getTransaction().rollback();
-                throw new RuntimeException(e);
+                throw e;
             }
         }
     }
@@ -64,7 +64,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
                 return foundEntity;
             } catch (Exception e) {
                 session.getTransaction().rollback();
-                throw new RuntimeException(e);
+                throw e;
             }
         }
     }
@@ -79,7 +79,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
                 return result;
             } catch (Exception e) {
                 session.getTransaction().rollback();
-                throw new RuntimeException(e);
+                throw e;
             }
         }
     }
@@ -94,7 +94,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
                 return result;
             } catch (Exception e) {
                 session.getTransaction().rollback();
-                throw new RuntimeException(e);
+                throw e;
             }
         }
     }
@@ -110,7 +110,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
                 session.getTransaction().commit();
             } catch (Exception e) {
                 session.getTransaction().rollback();
-                throw new RuntimeException(e);
+                throw e;
             }
         }
     }

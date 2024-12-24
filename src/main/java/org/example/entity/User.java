@@ -91,14 +91,14 @@ public abstract class User extends BaseEntity<Long> {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + getId() +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", nationalCode='" + nationalCode + '\'' +
+                "id= " + getId() +
+                "firstName= '" + firstName + '\'' +
+                ", lastName= '" + lastName + '\'' +
+                ", username= '" + username + '\'' +
+                ", password= '" + password + '\'' +
+                ", phoneNumber= '" + phoneNumber + '\'' +
+                ", email= '" + email + '\'' +
+                ", nationalCode= '" + nationalCode + '\'' +
                 '}';
     }
 

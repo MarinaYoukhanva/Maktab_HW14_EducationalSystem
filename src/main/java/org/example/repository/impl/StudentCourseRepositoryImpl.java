@@ -49,4 +49,18 @@ public class StudentCourseRepositoryImpl implements StudentCourseRepository {
                     .list();
         }
     }
+    @Override
+    public int setScore(Session session, Long studentId, Long courseId, Double score){
+        String hql = """
+                    UPDATE StudentCourse sc
+                    SET sc.score = :score
+                    WHERE sc.id.courseId = :courseId
+                    and sc.id.studentId = :studentId
+                    """;
+        return session.createMutationQuery(hql)
+                .setParameter("score", score)
+                .setParameter("courseId", courseId)
+                .setParameter("studentId", studentId)
+                .executeUpdate();
+    }
 }

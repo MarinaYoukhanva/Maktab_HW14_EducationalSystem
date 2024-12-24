@@ -1,7 +1,6 @@
 package org.example.view;
 
 import org.example.base.config.ApplicationContext;
-import org.example.entity.StudentCourse;
 import org.example.exception.NotFoundException;
 import org.example.service.*;
 import org.example.service.Authentication.UserAuthentication;
@@ -38,7 +37,8 @@ public class StudentMenu {
         System.out.println("Welcome to Student Menu! ");
         System.out.println("1.Take new course");
         System.out.println("2.Show my courses");
-        System.out.println("3.Logout");
+        System.out.println("3.Change password");
+        System.out.println("4.Logout");
         choice = scInt.nextInt();
         switch (choice) {
             case 1:
@@ -60,6 +60,8 @@ public class StudentMenu {
                 loggedInMenu();
                 break;
             case 3:
+                break;
+            case 4:
                 UserAuthentication.logout();
                 break;
         }

@@ -15,4 +15,6 @@ public interface StudentCourseRepository {
     List<StudentCourseDto> studentCourses(Long studentId);
 
     List<StudentDto> courseStudents(Long courseId);
+
+    int setScore(Session session, Long studentId, Long courseId, Double score);
 }

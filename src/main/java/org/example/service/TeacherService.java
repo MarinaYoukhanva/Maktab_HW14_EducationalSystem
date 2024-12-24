@@ -12,4 +12,6 @@ public interface TeacherService extends BaseService<Long, Teacher> {
     Teacher login (String personnelCode, String password);
     List<TeacherDto> findAllDto();
     List<StudentDto> courseStudentsForTeacher(Long teacherId, Long courseId);
+
+    void teacherSetsScore(Long teacherId, Long studentId, Long courseId, Double score);
 }

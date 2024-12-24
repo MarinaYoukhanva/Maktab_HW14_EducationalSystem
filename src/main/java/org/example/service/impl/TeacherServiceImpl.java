@@ -1,7 +1,6 @@
 package org.example.service.impl;
 
 import org.example.base.config.ApplicationContext;
-import org.example.base.model.BaseEntity;
 import org.example.base.service.BaseServiceImpl;
 import org.example.entity.Course;
 import org.example.entity.Teacher;
@@ -13,8 +12,8 @@ import org.example.service.Authentication.UserAuthentication;
 import org.example.service.TeacherService;
 import org.hibernate.Session;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRepository>
@@ -71,11 +70,15 @@ public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRe
 
     @Override
     public List<StudentDto> courseStudentsForTeacher(Long teacherId, Long courseId) {
-        Course course = ApplicationContext.getCourseService().findById(courseId)
-                .orElseThrow(() -> new NotFoundException(Course.class));
-        if (course.getTeacher() == null || !course.getTeacher().getId().equals(teacherId))
-            throw new NotFoundException(Course.class);
+        teacherHasCourseCheck(teacherId, courseId);
         return ApplicationContext.getStudentcourseService().courseStudents(courseId);
+    }
+    @Override
+    public void teacherSetsScore(Long teacherId, Long studentId, Long courseId, Double score){
+        Course course = teacherHasCourseCheck(teacherId, courseId);
+        if (course.getStartTime().isAfter(LocalDateTime.now()))
+            throw new CourseNotStartException();
+        ApplicationContext.getStudentcourseService().setScore(studentId, courseId, score);
     }
 
     private void usernameUniqueCheck(Session session, Teacher teacher) {
@@ -101,5 +104,12 @@ public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRe
                 .personnelCodeExistence(session, teacher.getPersonnelCode());
         if (personnelCodeCount != null && personnelCodeCount > 0)
             throw new PersonnelCodeExistsException();
+    }
+    private Course teacherHasCourseCheck(Long teacherId, Long courseId){
+        Course course = ApplicationContext.getCourseService().findById(courseId)
+                .orElseThrow(() -> new NotFoundException(Course.class));
+        if (course.getTeacher() == null || !course.getTeacher().getId().equals(teacherId))
+            throw new TeacherNotHaveCourseException();
+        return course;
     }
 }

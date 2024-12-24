@@ -61,12 +61,12 @@ public class Course extends BaseEntity<Long> {
     @Override
     public String toString() {
         return "Course{" +
-                "id=" + getId() +
-                "name=" + name +
-                ", unit=" + unit +
-                ", capacity=" + capacity +
-                ", startTime=" + startTime +
-                ", teacherId=" + Optional.ofNullable(teacher).map(Teacher::getId).orElse(null) +
+                "id= " + getId() +
+                "name= " + name +
+                ", unit= " + unit +
+                ", capacity= " + capacity +
+                ", startTime= " + startTime +
+                ", teacherId= " + Optional.ofNullable(teacher).map(Teacher::getId).orElse(null) +
                 '}';
     }
 }

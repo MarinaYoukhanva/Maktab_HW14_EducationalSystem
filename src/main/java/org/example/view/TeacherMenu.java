@@ -10,15 +10,10 @@ import java.util.Scanner;
 public class TeacherMenu {
 
     int choice;
-    int secondChoice;
     Scanner scString = new Scanner(System.in);
     Scanner scInt = new Scanner(System.in);
-    StudentService studentService = ApplicationContext.getStudentService();
-    AdminService adminService = ApplicationContext.getAdminService();
     TeacherService teacherService = ApplicationContext.getTeacherService();
     CourseService courseService = ApplicationContext.getCourseService();
-    StudentCourseService studentCourseService = ApplicationContext.getStudentcourseService();
-
 
     public void teacherMenu() {
 
@@ -39,7 +34,8 @@ public class TeacherMenu {
     public void loggedInMenu() {
         System.out.println("Welcome to the teacher menu");
         System.out.println("1.Show my courses");
-        System.out.println("2.Logout");
+        System.out.println("2.Change password");
+        System.out.println("3.Logout");
         choice = scInt.nextInt();
         switch (choice) {
             case 1:
@@ -55,13 +51,14 @@ public class TeacherMenu {
                             System.out.println("Please enter your course id: ");
                             Long courseId = scInt.nextLong();
                             try {
-                                teacherService.courseStudentsForTeacher(UserAuthentication.getLoggedInUser().getId(),
-                                            courseId)
-                                    .forEach(System.out::println);
+                                teacherService.courseStudentsForTeacher(UserAuthentication
+                                                        .getLoggedInUser().getId(),
+                                                courseId)
+                                        .forEach(System.out::println);
                             } catch (NotFoundException e) {
                                 System.out.println(e.getMessage());
+                                loggedInMenu();
                             }
-
                             System.out.println("---------------------------");
                             System.out.println("1.Set score for a student ");
                             System.out.println("2.Back to previous menu");
@@ -72,7 +69,16 @@ public class TeacherMenu {
                                     Long studentId = scInt.nextLong();
                                     System.out.println("Score: ");
                                     Double score = scInt.nextDouble();
-
+                                    try {
+                                        teacherService.teacherSetsScore(UserAuthentication
+                                                        .getLoggedInUser().getId(),
+                                                studentId, courseId, score);
+                                        System.out.println("Setting score was successful");
+                                        loggedInMenu();
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
+                                        loggedInMenu();
+                                    }
                                     break;
                                 case 2:
                                     loggedInMenu();
@@ -89,6 +95,8 @@ public class TeacherMenu {
                 }
                 break;
             case 2:
+                break;
+            case 3:
                 UserAuthentication.logout();
                 break;
         }

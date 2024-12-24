@@ -217,6 +217,15 @@ public class AdminMenu {
                 }
                 break;
             case 2:
+                Long courseId = scInt.nextLong();
+                try {
+//                    todo: delete StudentCourse relations
+                    courseService.delete(courseId);
+                    System.out.println("Delete was successful");
+                    loggedInMenu();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 3:
                 break;
