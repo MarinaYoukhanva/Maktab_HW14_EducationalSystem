@@ -12,6 +12,7 @@ import org.example.base.model.BaseEntity;
 import org.example.entity.enums.LessonName;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -21,16 +22,14 @@ import java.time.LocalDateTime;
 @Entity
 public class Course extends BaseEntity<Long> {
 
-    @Column(
-            nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
 //    @NotBlank(
 //            message = "course-name can not be null or blank! ")
     private LessonName name;
 
 
-    @Column(
-            nullable = false, length = 2)
+    @Column(nullable = false, length = 2)
 //    @NotBlank(
 //            message = "unit can not be null or blank! ")
 //    @Size(max = 2,
@@ -38,8 +37,7 @@ public class Course extends BaseEntity<Long> {
     private Integer unit;
 
 
-    @Column(
-            nullable = false, length = 3)
+    @Column(nullable = false, length = 3)
 //    @NotBlank(
 //            message = "capacity can not be null or blank! ")
 //    @Size(max = 3,
@@ -62,7 +60,7 @@ public class Course extends BaseEntity<Long> {
 
     @Override
     public String toString() {
-        return "Course{" +
+            return "Course{" +
                 "id=" + getId() +
                 "name=" + name +
                 ", unit=" + unit +

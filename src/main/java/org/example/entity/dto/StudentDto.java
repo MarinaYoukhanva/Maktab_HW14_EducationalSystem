@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class StudentDto {
 
+    Long id;
     String firstName;
     String lastName;
     String email;

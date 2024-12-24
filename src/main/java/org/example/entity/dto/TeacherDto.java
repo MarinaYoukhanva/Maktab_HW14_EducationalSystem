@@ -11,6 +11,7 @@ import org.example.entity.enums.Field;
 @NoArgsConstructor
 public class TeacherDto {
 
+    Long id;
     String firstName;
     String lastName;
     String email;

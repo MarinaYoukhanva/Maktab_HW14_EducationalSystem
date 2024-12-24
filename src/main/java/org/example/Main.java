@@ -6,8 +6,10 @@ import org.example.entity.Student;
 import org.example.entity.StudentCourse;
 import org.example.entity.enums.Field;
 import org.example.service.AdminService;
+import org.example.service.CourseService;
 import org.example.service.StudentService;
 import org.example.view.AdminMenu;
+import org.example.view.StudentMenu;
 import org.hibernate.Session;
 
 import java.util.EnumSet;
@@ -20,7 +22,9 @@ public class Main {
         //System.out.println(find(session, 1));
         StudentService studentService = ApplicationContext.getStudentService();
         AdminService adminService = ApplicationContext.getAdminService();
+        CourseService courseService = ApplicationContext.getCourseService();
         AdminMenu adminMenu = new AdminMenu();
+        StudentMenu studentMenu = new StudentMenu();
 //        Student student = ss.save(new Student(
 //                null, "m", "m", "m"));
 //        System.out.println(student);
@@ -42,9 +46,10 @@ public class Main {
 //        }
 
         //System.out.println(adminService.findById(1L).get());
-        EnumSet.allOf(Field.class).forEach(System.out::println);
 
-        adminMenu.adminMenu();
+        //System.out.println(courseService.findById(2L).get().getTeacher());
+        //adminMenu.adminMenu();
+        studentMenu.studentMenu();
     }
 
     public static Student find(Session session, Integer id) {

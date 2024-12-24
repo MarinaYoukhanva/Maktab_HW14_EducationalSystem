@@ -11,4 +11,5 @@ public interface StudentService extends BaseService<Long, Student> {
 
     Student login (String studentNumber, String password);
     List<StudentDto> findAllDto();
+    void takeCourse(Long studentId, Long courseId);
 }

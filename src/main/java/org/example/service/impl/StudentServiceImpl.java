@@ -1,7 +1,12 @@
 package org.example.service.impl;
 
+import org.example.SessionFactoryInstance;
+import org.example.base.config.ApplicationContext;
 import org.example.base.service.BaseServiceImpl;
+import org.example.entity.Course;
 import org.example.entity.Student;
+import org.example.entity.StudentCourse;
+import org.example.entity.StudentCourseKey;
 import org.example.entity.dto.StudentDto;
 import org.example.exception.*;
 import org.example.repository.StudentRepository;
@@ -52,11 +57,39 @@ public class StudentServiceImpl extends BaseServiceImpl<Long, Student, StudentRe
     @Override
     public List<StudentDto> findAllDto() {
         return findAll().stream().map(student -> new StudentDto(
+                student.getId(),
                 student.getFirstName(), student.getLastName(),
                 Optional.ofNullable(student.getEmail())
                         .orElse("email is not available by user"),
                 student.getStudentNumber())
         ).toList();
+    }
+
+    @Override
+    public void takeCourse(Long studentId, Long courseId) {
+        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+            try {
+                session.beginTransaction();
+                Course course = ApplicationContext.getCourseRepository()
+                        .findById(session, courseId)
+                                .orElseThrow(() -> new NotFoundException(Course.class));
+                Student student = getRepository()
+                        .findById(session, studentId)
+                                .orElseThrow(() -> new NotFoundException(Student.class));
+                StudentCourse studentCourse = StudentCourse.builder()
+                        .id(new StudentCourseKey(studentId, courseId))
+                        .student(student)
+                        .course(course)
+                        .build();
+                ApplicationContext.getStudentCourseRepository().save(session, studentCourse);
+                course.setCapacity(course.getCapacity() - 1);
+                ApplicationContext.getCourseRepository().save(session, course);
+                session.getTransaction().commit();
+            } catch (Exception e) {
+                session.getTransaction().rollback();
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void usernameUniqueCheck(Session session, Student student) {

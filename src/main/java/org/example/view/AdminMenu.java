@@ -52,7 +52,8 @@ public class AdminMenu {
         System.out.println("1.Show all students");
         System.out.println("2.Show all teachers");
         System.out.println("3.show all courses");
-        System.out.println("4.Logout");
+        System.out.println("4.Add course for teacher");
+        System.out.println("5.Logout");
         choice = scInt.nextInt();
         switch (choice) {
             case 1:
@@ -68,6 +69,22 @@ public class AdminMenu {
                 courseMenu();
                 break;
             case 4:
+                System.out.println("Courses: ");
+                courseService.findAll().forEach(System.out::println);
+                System.out.println("Teachers: ");
+                teacherService.findAllDto().forEach(System.out::println);
+                System.out.println("Select a course: ");
+                Long courseId = scInt.nextLong();
+                System.out.println("Select a teacher: ");
+                Long teacherId = scInt.nextLong();
+                try {
+                    courseService.setTeacher(courseId, teacherId);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    loggedInMenu();
+                }
+                break;
+            case 5:
                 AdminAuthentication.logout();
                 break;
 
@@ -102,6 +119,7 @@ public class AdminMenu {
                 try {
                     studentService.save(student);
                     System.out.println("Saving was successful");
+                    loggedInMenu();
                 } catch (ValidationException e) {
                     System.out.println(e.getMessage());
                     studentMenu();

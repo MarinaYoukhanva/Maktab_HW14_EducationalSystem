@@ -53,6 +53,7 @@ public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRe
     public List<TeacherDto> findAllDto() {
         return findAll().stream()
                 .map(teacher -> new TeacherDto(
+                        teacher.getId(),
                         teacher.getFirstName(), teacher.getLastName(),
                         Optional.ofNullable(teacher.getEmail())
                                 .orElse("email is not available by user"),

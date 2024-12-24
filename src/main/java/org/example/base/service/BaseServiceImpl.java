@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.example.SessionFactoryInstance;
 import org.example.base.model.BaseEntity;
 import org.example.base.repository.BaseRepository;
+import org.example.entity.User;
+import org.example.exception.NotFoundException;
 import org.example.validation.Validation;
 import org.hibernate.Session;
 
@@ -55,7 +57,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
             try {
                 session.beginTransaction();
                 var foundEntity = repository.findById(session, entity.getId())
-                        .orElseThrow(() -> new RuntimeException("Contact not found"));
+                        .orElseThrow(() -> new NotFoundException());
                 updateColumns(entity, foundEntity);
                 repository.save(session, foundEntity);
                 session.getTransaction().commit();
@@ -104,7 +106,7 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
                 session.beginTransaction();
                 var affectedRows = repository.delete(session, id);
                 if (affectedRows == 0)
-                    throw new RuntimeException("Contact Not Found");
+                    throw new NotFoundException();
                 session.getTransaction().commit();
             } catch (Exception e) {
                 session.getTransaction().rollback();
