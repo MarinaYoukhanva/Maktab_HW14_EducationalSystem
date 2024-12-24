@@ -52,6 +52,11 @@ public class CourseServiceImpl extends BaseServiceImpl<Long, Course, CourseRepos
     }
     @Override
     public List<Course> availableCourses(){
-        return getRepository().availableCourses();
+        return getRepository().availableCoursesForStudent();
+    }
+
+    @Override
+    public List<Course> teacherCourses(Long teacherId){
+        return getRepository().teacherCourses(teacherId);
     }
 }

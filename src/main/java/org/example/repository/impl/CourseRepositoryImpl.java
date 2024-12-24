@@ -3,7 +3,6 @@ package org.example.repository.impl;
 import org.example.SessionFactoryInstance;
 import org.example.base.repository.BaseRepositoryImpl;
 import org.example.entity.Course;
-import org.example.entity.Student;
 import org.example.repository.CourseRepository;
 import org.hibernate.Session;
 
@@ -16,7 +15,7 @@ public class CourseRepositoryImpl extends BaseRepositoryImpl<Long, Course>
     }
 
     @Override
-    public List<Course> availableCourses() {
+    public List<Course> availableCoursesForStudent() {
         try (Session session = SessionFactoryInstance.sessionFactory.openSession()) {
             String hql = """
                     FROM Course c
@@ -24,6 +23,18 @@ public class CourseRepositoryImpl extends BaseRepositoryImpl<Long, Course>
                     AND c.startTime > current timestamp
                     """;
             return session.createQuery(hql, Course.class).list();
+        }
+    }
+    @Override
+    public List<Course> teacherCourses(Long teacherId) {
+        try (Session session = SessionFactoryInstance.sessionFactory.openSession()) {
+            String hql = """
+                    FROM Course c
+                    WHERE c.teacher.id = :teacherId
+                    """;
+            return session.createQuery(hql, Course.class)
+                    .setParameter("teacherId", teacherId)
+                    .list();
         }
     }
 }

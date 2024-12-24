@@ -79,6 +79,8 @@ public class AdminMenu {
                 Long teacherId = scInt.nextLong();
                 try {
                     courseService.setTeacher(courseId, teacherId);
+                    System.out.println("Setting teacher for course was successful");
+                    loggedInMenu();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     loggedInMenu();
@@ -119,14 +121,14 @@ public class AdminMenu {
                 try {
                     studentService.save(student);
                     System.out.println("Saving was successful");
-                    loggedInMenu();
+                    studentMenu();
                 } catch (ValidationException e) {
                     System.out.println(e.getMessage());
                     studentMenu();
                 }
                 break;
             case 2:
-                studentMenu();
+                loggedInMenu();
                 break;
         }
     }
@@ -168,6 +170,7 @@ public class AdminMenu {
                 try {
                     teacherService.save(teacher);
                     System.out.println("Saving was successful");
+                    teacherMenu();
                 } catch (ValidationException e) {
                     System.out.println(e.getMessage());
                     teacherMenu();
@@ -207,9 +210,10 @@ public class AdminMenu {
                 try {
                     courseService.save(course);
                     System.out.println("Saving was successful");
+                    courseMenu();
                 } catch (ValidationException e) {
                     System.out.println(e.getMessage());
-                    teacherMenu();
+                    courseMenu();
                 }
                 break;
             case 2:
@@ -217,7 +221,7 @@ public class AdminMenu {
             case 3:
                 break;
             case 4:
-                adminMenu();
+                loggedInMenu();
                 break;
         }
     }

@@ -11,4 +11,6 @@ public interface CourseService extends BaseService<Long, Course> {
     public Course setTeacher(Long courseId, Long teacherId);
 
     List<Course> availableCourses();
+
+    List<Course> teacherCourses(Long teacherId);
 }

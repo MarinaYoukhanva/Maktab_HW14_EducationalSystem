@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.example.entity.Course;
 import org.example.entity.StudentCourse;
 import org.example.entity.dto.StudentCourseDto;
+import org.example.entity.dto.StudentDto;
 import org.example.repository.StudentCourseRepository;
 import org.example.service.StudentCourseService;
 
@@ -20,5 +21,10 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     public List<StudentCourseDto> studentCourses(Long studentId) {
         return getRepository().studentCourses(studentId);
+    }
+
+    @Override
+    public List<StudentDto> courseStudents(Long courseId) {
+        return getRepository().courseStudents(courseId);
     }
 }

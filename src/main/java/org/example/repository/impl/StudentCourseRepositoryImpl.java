@@ -1,9 +1,9 @@
 package org.example.repository.impl;
 
 import org.example.SessionFactoryInstance;
-import org.example.entity.Course;
 import org.example.entity.StudentCourse;
 import org.example.entity.dto.StudentCourseDto;
+import org.example.entity.dto.StudentDto;
 import org.example.repository.StudentCourseRepository;
 import org.hibernate.Session;
 
@@ -30,6 +30,22 @@ public class StudentCourseRepositoryImpl implements StudentCourseRepository {
                     """;
             return session.createQuery(hql, StudentCourseDto.class)
                     .setParameter("studentId", studentId)
+                    .list();
+        }
+    }
+    @Override
+    public List<StudentDto> courseStudents(Long courseId) {
+        try (Session session = SessionFactoryInstance.sessionFactory.openSession()) {
+            String hql = """
+                    SELECT new org.example.entity.dto.StudentDto(s.id, s.firstName, s.lastName,
+                        s.email, s.studentNumber)
+                    FROM StudentCourse sc
+                    join sc.course c
+                    join sc.student s
+                    WHERE c.id = :courseId
+                    """;
+            return session.createQuery(hql, StudentDto.class)
+                    .setParameter("courseId", courseId)
                     .list();
         }
     }

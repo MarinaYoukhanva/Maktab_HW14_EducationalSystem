@@ -1,7 +1,11 @@
 package org.example.service.impl;
 
+import org.example.base.config.ApplicationContext;
+import org.example.base.model.BaseEntity;
 import org.example.base.service.BaseServiceImpl;
+import org.example.entity.Course;
 import org.example.entity.Teacher;
+import org.example.entity.dto.StudentDto;
 import org.example.entity.dto.TeacherDto;
 import org.example.exception.*;
 import org.example.repository.TeacherRepository;
@@ -10,6 +14,7 @@ import org.example.service.TeacherService;
 import org.hibernate.Session;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRepository>
@@ -62,6 +67,15 @@ public class TeacherServiceImpl extends BaseServiceImpl<Long, Teacher, TeacherRe
                         teacher.getDegree())
                 ).toList();
 
+    }
+
+    @Override
+    public List<StudentDto> courseStudentsForTeacher(Long teacherId, Long courseId) {
+        Course course = ApplicationContext.getCourseService().findById(courseId)
+                .orElseThrow(() -> new NotFoundException(Course.class));
+        if (course.getTeacher() == null || !course.getTeacher().getId().equals(teacherId))
+            throw new NotFoundException(Course.class);
+        return ApplicationContext.getStudentcourseService().courseStudents(courseId);
     }
 
     private void usernameUniqueCheck(Session session, Teacher teacher) {
