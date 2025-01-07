@@ -1,4 +1,4 @@
-package org.example;
+package org.example.base.config;
 
 import org.example.entity.*;
 import org.hibernate.SessionFactory;
@@ -19,7 +19,6 @@ public class SessionFactoryInstance {
                 .addAnnotatedClass(StudentCourse.class)
                 .addAnnotatedClass(StudentCourseKey.class)
                 .buildSessionFactory();
-
     }
 
 }

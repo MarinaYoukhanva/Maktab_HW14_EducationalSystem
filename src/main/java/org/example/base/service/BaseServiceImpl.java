@@ -3,10 +3,10 @@ package org.example.base.service;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ValidationException;
 import lombok.Getter;
-import org.example.SessionFactoryInstance;
+import org.example.base.config.SessionFactoryInstance;
+import org.example.base.config.SessionManager;
 import org.example.base.model.BaseEntity;
 import org.example.base.repository.BaseRepository;
-import org.example.entity.User;
 import org.example.exception.NotFoundException;
 import org.example.validation.Validation;
 import org.hibernate.Session;
@@ -22,30 +22,45 @@ public abstract class BaseServiceImpl<ID extends Serializable, T extends BaseEnt
 
     private final R repository;
     Validation<ID, T> validation = new Validation<>();
+    SessionManager sessionManager = new SessionManager();
 
     public BaseServiceImpl(R repository) {
         this.repository = repository;
     }
 
 
+//    @Override
+//    public T save(T entity) {
+//        Set<ConstraintViolation<T>> violations=  validation.checkValidations(entity);
+//        if (!violations.isEmpty())
+//            throw new ValidationException(String.valueOf(violations));
+//        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
+//            infoLogicCheck(session, entity);
+//            try {
+//                session.beginTransaction();
+//                repository.save(session, entity);
+//                session.getTransaction().commit();
+//                return entity;
+//            } catch (Exception e) {
+//                session.getTransaction().rollback();
+//                throw e;
+//            }
+//        }
+//    }
+
     @Override
     public T save(T entity) {
-        Set<ConstraintViolation<T>> violations=  validation.checkValidations(entity);
-        if (!violations.isEmpty())
+        Set<ConstraintViolation<T>> violations = validation.checkValidations(entity);
+        if (!violations.isEmpty()) {
             throw new ValidationException(String.valueOf(violations));
-        try (var session = SessionFactoryInstance.sessionFactory.openSession()) {
-            infoLogicCheck(session, entity);
-            try {
-                session.beginTransaction();
-                repository.save(session, entity);
-                session.getTransaction().commit();
-                return entity;
-            } catch (Exception e) {
-                session.getTransaction().rollback();
-                throw e;
-            }
         }
+        return sessionManager.executeWithinTransaction(session -> {
+            infoLogicCheck(session, entity);
+            repository.save(session, entity);
+            return entity;
+        });
     }
+
 
     @Override
     public T update(T entity) {

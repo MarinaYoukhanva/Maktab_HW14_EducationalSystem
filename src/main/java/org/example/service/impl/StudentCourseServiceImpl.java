@@ -1,7 +1,7 @@
 package org.example.service.impl;
 
 import lombok.Getter;
-import org.example.SessionFactoryInstance;
+import org.example.base.config.SessionFactoryInstance;
 import org.example.entity.dto.StudentCourseDto;
 import org.example.entity.dto.StudentDto;
 import org.example.exception.NotSuccessfulException;

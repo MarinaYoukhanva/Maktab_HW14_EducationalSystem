@@ -1,6 +1,6 @@
 package org.example.service.impl;
 
-import org.example.SessionFactoryInstance;
+import org.example.base.config.SessionFactoryInstance;
 import org.example.base.config.ApplicationContext;
 import org.example.base.service.BaseServiceImpl;
 import org.example.entity.Course;

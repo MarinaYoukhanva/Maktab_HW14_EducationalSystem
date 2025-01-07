@@ -1,8 +1,7 @@
 package org.example.repository.impl;
 
-import org.example.SessionFactoryInstance;
+import org.example.base.config.SessionFactoryInstance;
 import org.example.base.repository.BaseRepositoryImpl;
-import org.example.entity.Student;
 import org.example.entity.Teacher;
 import org.example.repository.TeacherRepository;
 import org.hibernate.Session;
@@ -23,7 +22,7 @@ public class TeacherRepositoryImpl extends BaseRepositoryImpl<Long, Teacher>
                 .setParameter("email", teacher.getEmail())
                 .getSingleResult();
     }
-
+//todo uniqueResult
     @Override
     public Long usernameExistence(Session session, Teacher teacher) {
         return session

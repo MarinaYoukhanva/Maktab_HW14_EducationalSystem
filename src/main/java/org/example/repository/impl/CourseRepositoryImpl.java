@@ -1,6 +1,6 @@
 package org.example.repository.impl;
 
-import org.example.SessionFactoryInstance;
+import org.example.base.config.SessionFactoryInstance;
 import org.example.base.repository.BaseRepositoryImpl;
 import org.example.entity.Course;
 import org.example.repository.CourseRepository;
